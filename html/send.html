@@ -1,0 +1,17 @@
+<%include file="header.html" />
+<h1>Send</h1>
+<form id="sendcoins">
+<label for="address">Address</label>
+<input name="address" type="text" size="30" />
+<label for="amount">Amount</label>
+<input name="address" type="text" size="30" />
+<br />
+<input type="submit"/>
+</form>
+
+<script>
+$("#sendcoins").on("submit", function(event) {
+    event.preventDefault();
+    console.log($(this).serialize());
+});
+</script>

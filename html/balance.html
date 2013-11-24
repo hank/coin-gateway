@@ -1,0 +1,42 @@
+<%include file="header.html" />
+<h1>Balances</h1>
+<table id="accounts">
+<tr>
+    <th>RPC</th>
+    <th>Balance</th>
+</tr>
+</table>
+<input type="button" onClick="getAccounts()" value="Update" />
+<script>
+function getAccounts() {
+    $('#accounts tr[class="rpc"]').remove();
+    $.getJSON( "/api", function( data ) {
+        for(i=0; i<data.length; ++i) {
+            getBalances(data[i]);
+        }
+    })
+        .fail(function() {
+            console.log("Failed to fetch account list");
+        });
+}
+
+function getBalances(rpc) {
+    if(rpc == null) return;
+    $.getJSON( "/api/" + rpc + "/balance", function( data ) {
+        var balance = data['balance'];
+        var tr = $('<tr />', {
+            id: rpc,
+            class: "rpc"
+        });
+        var td = $('<td />', {
+            text: rpc
+        });
+        td.appendTo(tr);
+        td = $('<td />', {
+            text: balance
+        });
+        td.appendTo(tr);
+        tr.appendTo($('#accounts'));
+    });
+}
+</script>

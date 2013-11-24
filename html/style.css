@@ -1,0 +1,11 @@
+body {
+    background-color: #eec;
+}
+
+table, table tr, table tr td {
+    border: 2px ridge;
+}
+
+table tr td {
+    text-align: center;
+}

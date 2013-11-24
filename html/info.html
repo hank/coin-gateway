@@ -1,0 +1,55 @@
+<%include file="header.html" />
+<h1>RPC Info</h1>
+<table id="info">
+<tr>
+    <th>RPC</th>
+    <th>Connections</th>
+    <th>Blocks</th>
+    <th>Wallet Version</th>
+    <th>Difficulty</th>
+    <th>Version</th>
+    <th>Protocol Version</th>
+    <th>Balance</th>
+</tr>
+</table>
+<input type="button" onClick="getAllInfo()" value="Update" />
+<script>
+function getAllInfo() {
+    $('#info tr[class="rpc"]').remove();
+    $.getJSON( "/api", function( data ) {
+        for(i=0; i<data.length; ++i) {
+            getInfo(data[i]);
+        }
+    })
+        .fail(function() {
+            console.log("Failed to fetch account list");
+        });
+}
+
+function getInfo(rpc) {
+    if(rpc == null) return;
+    $.getJSON( "/api/" + rpc + "/info", function( data ) {
+        var info = data['info'];
+        var tr = $('<tr />', {
+            id: rpc,
+            class: "rpc"
+        });
+        var td = $('<td />', {
+            text: rpc
+        });
+        td.appendTo(tr);
+        var keys = Array('connections', 'blocks', 'walletversion',
+                         'difficulty', 'version', 'protocolversion',
+                         'balance');
+        for(i=0; i<keys.length; ++i) {
+            if(info[keys[i]] != null) {
+                var td = $('<td />', {
+                    text: info[keys[i]]
+                });
+                td.appendTo(tr);
+            }
+        }
+        tr.appendTo($('#info'));
+    });
+}
+</script>
