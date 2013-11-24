@@ -40,7 +40,7 @@ class API(object):
 
     def _get_transactions(self, rpc):
         try:
-            transactions = rpc.listtransactions()
+            transactions = [t.get_dict() for t in rpc.listtransactions()]
             return json.dumps({'transactions': transactions})
         except Exception as e:
             return util.make_error('Error getting trnasactions: {}'.format(e))
