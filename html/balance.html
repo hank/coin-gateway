@@ -6,21 +6,9 @@
     <th>Balance</th>
 </tr>
 </table>
-<input type="button" onClick="getAccounts()" value="Update" />
+<input type="button" onClick="forAllRPCs(getBalance)" value="Update" />
 <script>
-function getAccounts() {
-    $('#accounts tr[class="rpc"]').remove();
-    $.getJSON( "/api", function( data ) {
-        for(i=0; i<data.length; ++i) {
-            getBalances(data[i]);
-        }
-    })
-        .fail(function() {
-            console.log("Failed to fetch account list");
-        });
-}
-
-function getBalances(rpc) {
+function getBalance(rpc) {
     if(rpc == null) return;
     $.getJSON( "/api/" + rpc + "/balance", function( data ) {
         var balance = data['balance'];

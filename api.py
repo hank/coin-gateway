@@ -17,6 +17,8 @@ class API(object):
                 return self._get_balance(rpc_connections[id])
             elif action == 'info':
                 return self._get_info(rpc_connections[id])
+            elif action == 'transactions':
+                return self._get_transactions(rpc_connections[id])
             else:
                 return util.make_error('API call not implemented')
         else:
@@ -34,4 +36,11 @@ class API(object):
             info = rpc.getinfo()
             return json.dumps({'info': info.get_dict()})
         except Exception as e:
-            return util.make_error('Error getting balance: {}'.format(e))
+            return util.make_error('Error getting info: {}'.format(e))
+
+    def _get_transactions(self, rpc):
+        try:
+            transactions = rpc.listtransactions()
+            return json.dumps({'transactions': transactions})
+        except Exception as e:
+            return util.make_error('Error getting trnasactions: {}'.format(e))

@@ -23,6 +23,12 @@ class Root(object):
         return out
 
     @cherrypy.expose
+    def transactions(self):
+        tmpl = lookup.get_template("transactions.html")
+        out = tmpl.render()
+        return out
+
+    @cherrypy.expose
     def send(self):
         tmpl = lookup.get_template("send.html")
         out = tmpl.render(rpc_connections=rpc_connections.keys())

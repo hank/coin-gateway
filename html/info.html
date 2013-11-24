@@ -12,20 +12,8 @@
     <th>Balance</th>
 </tr>
 </table>
-<input type="button" onClick="getAllInfo()" value="Update" />
+<input type="button" onClick="forAllRPCs(getInfo)" value="Update" />
 <script>
-function getAllInfo() {
-    $('#info tr[class="rpc"]').remove();
-    $.getJSON( "/api", function( data ) {
-        for(i=0; i<data.length; ++i) {
-            getInfo(data[i]);
-        }
-    })
-        .fail(function() {
-            console.log("Failed to fetch account list");
-        });
-}
-
 function getInfo(rpc) {
     if(rpc == null) return;
     $.getJSON( "/api/" + rpc + "/info", function( data ) {
