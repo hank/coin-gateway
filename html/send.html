@@ -1,17 +1,34 @@
 <%include file="header.html" />
 <h1>Send</h1>
 <form id="sendcoins">
+<label for="rpc">RPC</label>
+<select name="rpc" id="rpc">
+    % for rpc in rpc_connections:
+        <option value="${rpc}">${rpc}</option>
+    % endfor
+</select>
 <label for="address">Address</label>
-<input name="address" type="text" size="30" />
+<input name="address" id="address" type="text" size="30" />
 <label for="amount">Amount</label>
-<input name="address" type="text" size="30" />
+<input name="amount" id="amount" type="text" size="16" />
 <br />
 <input type="submit"/>
 </form>
 
+<span id="result"></span>
+
 <script>
 $("#sendcoins").on("submit", function(event) {
     event.preventDefault();
-    console.log($(this).serialize());
+    params = $(this).serialize();
+    rpc = $("#rpc").val();
+    $.post('/api/send/', params, function(data) {
+        console.log(data);
+        $('#result').text(data.responseText);
+    })
+        .fail(function(data) {
+            console.log(data);
+            $('#result').text(data.responseText);
+    });
 });
 </script>

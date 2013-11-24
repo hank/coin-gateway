@@ -2,6 +2,7 @@ import cherrypy
 from mako.template import Template
 from mako.lookup import TemplateLookup
 from api import API
+from rpc_connections import rpc_connections
 lookup = TemplateLookup(directories=['html'])
 class Root(object):
     api = API()
@@ -24,5 +25,5 @@ class Root(object):
     @cherrypy.expose
     def send(self):
         tmpl = lookup.get_template("send.html")
-        out = tmpl.render()
+        out = tmpl.render(rpc_connections=rpc_connections.keys())
         return out
