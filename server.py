@@ -1,5 +1,3 @@
-import os.path
-current_dir = os.path.dirname(os.path.abspath(__file__))
 import cherrypy
 import json
 import bitcoinrpc

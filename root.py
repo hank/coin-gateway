@@ -1,3 +1,5 @@
+import os.path
+current_dir = os.path.dirname(os.path.abspath(__file__))
 import cherrypy
 from mako.template import Template
 from mako.lookup import TemplateLookup
