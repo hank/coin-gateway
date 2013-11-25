@@ -28,20 +28,19 @@
 </table>
 <input type="button" onClick="forAllRPCs(getTransactions)" value="Update" />
 <script>
-//{"transactions": [{"category": "send", "account": "", "fee": "-0.00010000", "time": 1385329999, "txid": "147a23587a3e42707762e90a97176b73ab04dd27abe9ffb60f82bbcc8134fe14", "amount": "-0.00100000", "confirmations": 0, "timereceived": 1385329999, "address": "1JJojLfvxjwMJWLmTjTZx4f7bvDXqmNGy2"}, {"category": "receive", "account": "FOO", "blockhash": "000000000000000378d902b5b13cabdca59256560e5620f5834dbdef14c2686b", "blockindex": 257, "time": 1385318553, "txid": "de5357a80092456b9f731a4902103de4d8e9ac1c408cfa6f3a4e216ea78abdda", "blocktime": 1385318553, "amount": "0.01000000", "confirmations": 24, "timereceived": 1385329700, "address": "1KFWiDmS7B9fnSLpQWGueVKSDQuDwRYBnb"}]}
 function getTransactions(rpc) {
     if(rpc == null) return;
-    $.getJSON( "/api/" + rpc + "/transactions", function( data ) {
+    $.getJSON( "api/" + rpc + "/transactions", function( data ) {
         var transactions = data['transactions'];
-        $('#send_transactions tr[class="rpc"]').remove();
-        $('#recv_transactions tr[class="rpc"]').remove();
+        $('#send_transactions tr[class="rpc'+rpc+'"]').remove();
+        $('#recv_transactions tr[class="rpc'+rpc+'"]').remove();
         var keys = Array('category', 'fee', 'time',
                          'txid', 'amount', 'confirmations',
                          'address');
         for(j=0; j<transactions.length; ++j) {
             var tr = $('<tr />', {
                 id: rpc,
-                class: "rpc"
+                class: "rpc"+rpc
             });
             var td = $('<td />', {
                 text: rpc
@@ -70,4 +69,7 @@ function getTransactions(rpc) {
         }
     });
 }
+$(document).ready(function() {
+    forAllRPCs(getTransactions);
+});
 </script>

@@ -16,11 +16,12 @@
 <script>
 function getInfo(rpc) {
     if(rpc == null) return;
-    $.getJSON( "/api/" + rpc + "/info", function( data ) {
+    $.getJSON( "api/" + rpc + "/info", function( data ) {
+        $('#info tr[class="rpc'+rpc+'"]').remove();
         var info = data['info'];
         var tr = $('<tr />', {
             id: rpc,
-            class: "rpc"
+            class: "rpc"+rpc
         });
         var td = $('<td />', {
             text: rpc
@@ -40,4 +41,7 @@ function getInfo(rpc) {
         tr.appendTo($('#info'));
     });
 }
+$(document).ready(function() {
+    forAllRPCs(getInfo);
+});
 </script>

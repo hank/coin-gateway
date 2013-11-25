@@ -10,11 +10,12 @@
 <script>
 function getBalance(rpc) {
     if(rpc == null) return;
-    $.getJSON( "/api/" + rpc + "/balance", function( data ) {
+    $.getJSON( "api/" + rpc + "/balance", function( data ) {
+        $('#accounts tr[class="rpc'+rpc+'"]').remove();
         var balance = data['balance'];
         var tr = $('<tr />', {
             id: rpc,
-            class: "rpc"
+            class: "rpc"+rpc
         });
         var td = $('<td />', {
             text: rpc
@@ -27,4 +28,7 @@ function getBalance(rpc) {
         tr.appendTo($('#accounts'));
     });
 }
+$(document).ready(function() {
+    forAllRPCs(getBalance);
+});
 </script>

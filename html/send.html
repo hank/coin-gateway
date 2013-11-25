@@ -24,7 +24,7 @@ $("#sendcoins").on("submit", function(event) {
     event.preventDefault();
     params = $(this).serialize();
     rpc = $("#rpc").val();
-    $.post('/api/send/', params, function(data) {
+    $.post('api/send/', params, function(data) {
         console.log(data);
         $('#result').text(data.responseText);
     })
